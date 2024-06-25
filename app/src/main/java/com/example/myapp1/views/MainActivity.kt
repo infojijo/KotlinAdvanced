@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                                 text = "Hello Sticky"
                             )
                         }
-                        listViewModel.getMyList().map {
+                        listViewModel.getMyList()?.map {
                             item {
                                 Text(text = "$it")
                             }

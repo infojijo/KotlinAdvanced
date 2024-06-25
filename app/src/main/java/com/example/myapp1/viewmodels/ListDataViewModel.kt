@@ -1,6 +1,8 @@
 package com.example.myapp1.viewmodels
 
 import androidx.lifecycle.ViewModel
+import com.example.myapp1.models.Comments
+import com.example.myapp1.models.ListRepository
 
 class ListDataViewModel : ViewModel() {
     private var myList = mutableListOf<String>()
@@ -11,5 +13,5 @@ class ListDataViewModel : ViewModel() {
         }
     }
 
-    fun getMyList(): List<String> = myList
+    fun getMyList(): List<Comments>? = ListRepository.getNetworkResponse()
 }
