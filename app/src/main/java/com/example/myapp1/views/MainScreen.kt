@@ -16,14 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.myapp1.views.theme.MyApp1Theme
+import com.example.myapp1.viewmodels.ListDataViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(listViewModel: ListDataViewModel) {
+
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -40,12 +40,16 @@ fun MainScreen() {
                     text = "Hello Sticky"
                 )
             }
-            items(10) {
-                Box(
-                    modifier = Modifier
-                        .background(Color.LightGray)
-                        .size(80.dp)
-                )
+            listViewModel?.getMyList()?.size?.let {
+                items(it) {
+                    Box(
+                        modifier = Modifier
+                            .background(Color.LightGray)
+                            .size(80.dp)
+                    ) {
+                        Text(text = "test")
+                    }
+                }
             }
             item {
                 Button(onClick = { coroutineScope.launch { listState.scrollToItem(0) } }) {
@@ -54,13 +58,5 @@ fun MainScreen() {
             }
 
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MainScreenPreview() {
-    MyApp1Theme {
-        MainScreen()
     }
 }
