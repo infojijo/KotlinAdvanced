@@ -1,4 +1,7 @@
 package com.example.myapp1.models
 
-class Comments {
-}
+data class Comments(
+    val body: String,
+    val email: String,
+    val id: Int
+)
