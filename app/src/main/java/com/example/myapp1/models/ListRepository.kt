@@ -42,7 +42,9 @@ object ListRepository {
         emit(DataStatus.loading())
         val result = api?.getComments()
         when (result?.code()) {
-            200 -> emit(DataStatus.success(result.body()))
+            200 -> {
+                emit(DataStatus.success(result.body()))
+            }
         }
     }
         .catch {
