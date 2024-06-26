@@ -22,9 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.example.myapp1.viewmodels.ListDataViewModel
 import com.example.myapp1.views.theme.MyApp1Theme
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
@@ -50,20 +54,18 @@ class MainActivity : ComponentActivity() {
                                 text = "Hello Sticky"
                             )
                         }
-                        listViewModel.getMyList()?.map {
-                            item {
-                                Text(text = "$it")
+                        lifecycleScope.launch {
+                            listViewModel.getFlowResult()
+                            listViewModel.flowList.observe(
+                                this@MainActivity
+                            ) { commentList ->
+                                for (comment in commentList) {
+                                    item {
+                                        Text(text = "$comment")
+                                    }
+                                }
                             }
                         }
-                        /*  items(listViewModel.getMyList().size) {
-                              Box(
-                                  modifier = Modifier
-                                      .background(Color.LightGray)
-                                      .size(80.dp)
-                              ) {
-                                  Text(text = "test")
-                              }
-                          }*/
                         item {
                             Button(onClick = { coroutineScope.launch { listState.scrollToItem(0) } }) {
                                 Text(text = "Scroll to Top")

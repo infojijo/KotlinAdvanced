@@ -1,6 +1,7 @@
 package com.example.myapp1.models
 
 import com.example.myapp1.network.MyAPI
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.flow
@@ -24,23 +25,22 @@ object ListRepository {
             .create(MyAPI::class.java)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun getNetworkResponse(): List<Comments>? {
 
         GlobalScope.launch(Dispatchers.IO) {
             val comments = api?.getComments()
             if (comments?.isSuccessful == true) {
-                returnList = comments?.body()!!
+                returnList = comments.body()!!
             }
         }
         return returnList
     }
 
     suspend fun getFlowResponse() = flow {
-
         val result = api?.getComments()
         when (result?.code()) {
             200 -> emit(result.body())
-
         }
     }
         .catch {
