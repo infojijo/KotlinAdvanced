@@ -9,7 +9,7 @@ class ListDataViewModel : ViewModel() {
 
     init {
         for (i in 1..50) {
-            myList.add("jingidi->$i")
+            myList.add("Test Data->$i")
         }
     }
 
