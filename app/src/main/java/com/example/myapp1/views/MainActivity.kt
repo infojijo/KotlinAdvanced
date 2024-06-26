@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -57,6 +60,7 @@ class MainActivity : ComponentActivity() {
                                     DataStatus.Status.LOADING -> {
                                         item {
                                             Text(text = "Data Loading from API - wait")
+                                            showProgress()
                                         }
                                     }
                                     DataStatus.Status.SUCCESS -> {
@@ -90,6 +94,14 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!", modifier = modifier
     )
+}
+
+@Composable
+fun showProgress(){
+
+    Column {
+        LinearProgressIndicator()
+    }
 }
 
 @Preview(showBackground = true)
