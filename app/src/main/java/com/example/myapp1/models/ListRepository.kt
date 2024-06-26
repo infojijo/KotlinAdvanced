@@ -25,6 +25,7 @@ object ListRepository {
             .create(MyAPI::class.java)
     }
 
+    //###############NOT USED################
     @OptIn(DelicateCoroutinesApi::class)
     fun getNetworkResponse(): List<Comments>? {
 
@@ -38,13 +39,14 @@ object ListRepository {
     }
 
     suspend fun getFlowResponse() = flow {
+        emit(DataStatus.loading())
         val result = api?.getComments()
         when (result?.code()) {
-            200 -> emit(result.body())
+            200 -> emit(DataStatus.success(result.body()))
         }
     }
         .catch {
-            emit(emptyList())
+            emit(DataStatus.error("Error"))
         }
         .flowOn(Dispatchers.IO)
 }

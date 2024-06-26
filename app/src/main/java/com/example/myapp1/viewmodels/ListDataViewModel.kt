@@ -5,13 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapp1.models.Comments
+import com.example.myapp1.models.DataStatus
 import com.example.myapp1.models.ListRepository
 import kotlinx.coroutines.launch
 
 class ListDataViewModel : ViewModel() {
     private var myList = mutableListOf<String>()
-    private val _flowList = MutableLiveData<List<Comments>>()
-    val flowList: LiveData<List<Comments>>
+    private val _flowList = MutableLiveData<DataStatus<List<Comments>>>()
+    val flowList: LiveData<DataStatus<List<Comments>>>
         get() = _flowList
 
     init {

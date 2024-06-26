@@ -5,11 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
@@ -19,16 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.example.myapp1.models.DataStatus
 import com.example.myapp1.viewmodels.ListDataViewModel
 import com.example.myapp1.views.theme.MyApp1Theme
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
@@ -59,9 +53,21 @@ class MainActivity : ComponentActivity() {
                             listViewModel.flowList.observe(
                                 this@MainActivity
                             ) { commentList ->
-                                for (comment in commentList) {
-                                    item {
-                                        Text(text = "$comment")
+                                when (commentList.status) {
+                                    DataStatus.Status.LOADING -> {
+                                        item {
+                                            Text(text = "Data Loading from API - wait")
+                                        }
+                                    }
+                                    DataStatus.Status.SUCCESS -> {
+                                        for (comment in commentList.data!!) {
+                                            item {
+                                                Text(text = "$comment")
+                                            }
+                                        }
+                                        coroutineScope.launch { listState.scrollToItem(0) }
+                                    }
+                                    DataStatus.Status.ERROR -> {
                                     }
                                 }
                             }
