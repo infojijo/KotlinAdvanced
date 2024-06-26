@@ -3,35 +3,48 @@ package com.example.myapp1.models
 import com.example.myapp1.network.MyAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 
 object ListRepository {
     private val HTTP_BASE_URL = "https://jsonplaceholder.typicode.com"
     private var returnList: List<Comments>? = null
-    fun getNetworkResponse(): List<Comments>? {
-        val api = Retrofit
+    private var api: MyAPI? = null
+
+    init {
+        api = Retrofit
             .Builder()
             .baseUrl(HTTP_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(MyAPI::class.java)
-        /*api.getComments().enqueue(object : Callback<List<Comments>> {
-            override fun onResponse(
-                call: Call<List<Comments>>,
-                response: Response<List<Comments>>
-            ) {
-            }
-            override fun onFailure(call: Call<List<Comments>>, t: Throwable) {
-            }
-        })*/
+    }
+
+    fun getNetworkResponse(): List<Comments>? {
+
         GlobalScope.launch(Dispatchers.IO) {
-            val comments = api.getComments()
-            if (comments.isSuccessful) {
-                returnList = comments.body()!!
+            val comments = api?.getComments()
+            if (comments?.isSuccessful == true) {
+                returnList = comments?.body()!!
             }
         }
         return returnList
     }
+
+    suspend fun getFlowResponse() = flow {
+
+        val result = api?.getComments()
+        when (result?.code()) {
+            200 -> emit(result.body())
+
+        }
+    }
+        .catch {
+            emit(emptyList())
+        }
+        .flowOn(Dispatchers.IO)
 }
