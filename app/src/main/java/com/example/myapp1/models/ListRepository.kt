@@ -4,6 +4,7 @@ import com.example.myapp1.network.MyAPI
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
@@ -40,6 +41,8 @@ object ListRepository {
 
     suspend fun getFlowResponse() = flow {
         emit(DataStatus.loading())
+        //for mocking the progress bar.
+        delay(4000)
         val result = api?.getComments()
         when (result?.code()) {
             200 -> {

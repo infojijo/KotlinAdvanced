@@ -17,7 +17,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,7 +29,11 @@ import androidx.lifecycle.lifecycleScope
 import com.example.myapp1.models.DataStatus
 import com.example.myapp1.viewmodels.ListDataViewModel
 import com.example.myapp1.views.theme.MyApp1Theme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : ComponentActivity() {
 
@@ -39,17 +47,24 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 val listState = rememberLazyListState()
                 val coroutineScope = rememberCoroutineScope()
-
+                var showProgress by remember { mutableStateOf(true) }
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     LazyColumn(
-                        state = listState, verticalArrangement = Arrangement.spacedBy(10.dp)
+                        state = listState,
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         stickyHeader {
                             Text(
                                 text = "Hello Sticky"
                             )
+                        }
+                        item {
+                            if (showProgress) {
+                                showProgress()
+                            }
                         }
                         lifecycleScope.launch {
                             listViewModel.getFlowResult()
@@ -57,13 +72,9 @@ class MainActivity : ComponentActivity() {
                                 this@MainActivity
                             ) { commentList ->
                                 when (commentList.status) {
-                                    DataStatus.Status.LOADING -> {
-                                        item {
-                                            Text(text = "Data Loading from API - wait")
-                                            showProgress()
-                                        }
-                                    }
+                                    DataStatus.Status.LOADING -> {}
                                     DataStatus.Status.SUCCESS -> {
+                                        showProgress = false
                                         for (comment in commentList.data!!) {
                                             item {
                                                 Text(text = "$comment")
@@ -71,8 +82,8 @@ class MainActivity : ComponentActivity() {
                                         }
                                         coroutineScope.launch { listState.scrollToItem(0) }
                                     }
-                                    DataStatus.Status.ERROR -> {
-                                    }
+
+                                    DataStatus.Status.ERROR -> {}
                                 }
                             }
                         }
@@ -97,9 +108,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun showProgress(){
+fun showProgress() {
 
-    Column {
+    Column() {
         LinearProgressIndicator()
     }
 }
