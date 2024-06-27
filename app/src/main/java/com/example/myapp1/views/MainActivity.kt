@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                         }
                         item {
                             if (showProgress) {
-                                showProgress()
+                                ShowProgress()
                             }
                         }
                         lifecycleScope.launch {
@@ -103,8 +103,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun showProgress() {
-
+fun ShowProgress() {
     Column() {
         LinearProgressIndicator()
     }
