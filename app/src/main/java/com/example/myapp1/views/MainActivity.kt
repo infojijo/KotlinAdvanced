@@ -5,9 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
@@ -22,8 +25,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.example.myapp1.models.DataStatus
 import com.example.myapp1.viewmodels.ListDataViewModel
@@ -72,22 +77,47 @@ class MainActivity : ComponentActivity() {
                                         showProgress = false
                                         for (comment in commentList.data!!) {
                                             item {
-                                                Text(text = "$comment")
+                                                Box(
+                                                    modifier = Modifier
+                                                        .padding(10.dp)
+                                                        .background(Color.LightGray)
+                                                ) {
+                                                    Text(
+                                                        text = comment.email,
+                                                        fontSize = 18.sp,
+                                                        color = Color.Black.copy(alpha = 0.5f)
+                                                    )
+                                                }
+                                                Box(
+                                                    modifier = Modifier
+                                                        .padding(10.dp)
+                                                        .background(Color.LightGray)
+                                                ) {
+                                                    Text(
+                                                        text = comment.body,
+                                                        fontSize = 14.sp,
+                                                        color = Color.Black.copy(alpha = 0.5f)
+                                                    )
+                                                }
                                             }
+
                                         }
                                         coroutineScope.launch { listState.scrollToItem(0) }
+                                        item {
+                                            Button(onClick = {
+                                                coroutineScope.launch {
+                                                    listState.scrollToItem(0)
+                                                }
+                                            }) {
+                                                Text(text = "Scroll to Top")
+                                            }
+                                        }
                                     }
 
                                     DataStatus.Status.ERROR -> {}
                                 }
                             }
                         }
-                        item {
-                            Button(onClick = { coroutineScope.launch { listState.scrollToItem(0) } }) {
-                                Text(text = "Scroll to Top")
-                            }
-                        }
-
                     }
                 }
             }
@@ -104,8 +134,8 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 @Composable
 fun ShowProgress() {
-    Column() {
-        LinearProgressIndicator()
+    Box(modifier = Modifier.fillMaxSize()) {
+        LinearProgressIndicator(modifier = Modifier.fillMaxSize())
     }
 }
 
