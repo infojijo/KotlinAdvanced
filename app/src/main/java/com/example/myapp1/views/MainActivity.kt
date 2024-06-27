@@ -80,7 +80,6 @@ class MainActivity : ComponentActivity() {
                                                 Box(
                                                     modifier = Modifier
                                                         .padding(10.dp)
-                                                        .background(Color.LightGray)
                                                 ) {
                                                     Text(
                                                         text = comment.id.toString() + " - " + comment.email,
@@ -91,7 +90,6 @@ class MainActivity : ComponentActivity() {
                                                 Box(
                                                     modifier = Modifier
                                                         .padding(10.dp)
-                                                        .background(Color.LightGray)
                                                 ) {
                                                     Text(
                                                         text = comment.body,
