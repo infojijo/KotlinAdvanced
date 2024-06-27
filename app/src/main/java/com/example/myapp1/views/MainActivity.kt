@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
                                                         .background(Color.LightGray)
                                                 ) {
                                                     Text(
-                                                        text = comment.email,
+                                                        text = "$comment.id $comment.email",
                                                         fontSize = 18.sp,
                                                         color = Color.Black.copy(alpha = 0.5f)
                                                     )
