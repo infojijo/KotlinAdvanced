@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                 var showProgress by remember { mutableStateOf(true) }
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color.White
                 ) {
                     LazyColumn(
                         state = listState,
@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         stickyHeader {
                             Text(
-                                text = "Hello Sticky"
+                                text = "Hey, Comments updated below!!"
                             )
                         }
                         item {
