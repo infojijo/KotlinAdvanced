@@ -174,3 +174,27 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+sealed class Exercise {
+    class Run(val numLaps : Int) : Exercise()
+    class Yoga(val numMinutes: Int) : Exercise()
+}
+
+fun main() {
+    val exercise = Exercise.Yoga(30)
+    println(needMat(exercise))
+}
+
+fun needMat(exercise: Exercise) : Boolean {
+    return when (exercise) {
+        is Exercise.Run -> false
+        is Exercise.Yoga -> true
+    }
+}
+
+
+fun main1() {
+    println("Hello, world!!!")
+    val testString = "Welcome@2020 "+"hello 123"
+    println(testString)
+}
