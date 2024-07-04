@@ -41,6 +41,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private val listViewModel by viewModels<ListDataViewModel>()
+
     @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,8 +60,9 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
                         stickyHeader {
+                            val text = intent.getStringExtra("name") ?: "Guest"
                             Text(
-                                text = "Hey, Comments updated below!!",
+                                text = "Welcome $text,",
                             )
                         }
                         item {
@@ -145,22 +147,23 @@ fun ShowProgress(loading: Boolean, isCircleType: Boolean) {
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-    ) {if(isCircleType){
-        CircularProgressIndicator(
-            modifier = Modifier.width(45.dp),
-            color = MaterialTheme.colorScheme.secondary,
-            trackColor = MaterialTheme.colorScheme.surfaceVariant,
-        )}
-        else{
-        LinearProgressIndicator(
-            modifier =
-            Modifier
-                .fillMaxSize()
-                .height(18.dp)
-                .background(Color.LightGray),
-            color = Color.Green,
-        )
-    }
+    ) {
+        if (isCircleType) {
+            CircularProgressIndicator(
+                modifier = Modifier.width(45.dp),
+                color = MaterialTheme.colorScheme.secondary,
+                trackColor = MaterialTheme.colorScheme.surfaceVariant,
+            )
+        } else {
+            LinearProgressIndicator(
+                modifier =
+                Modifier
+                    .fillMaxSize()
+                    .height(18.dp)
+                    .background(Color.LightGray),
+                color = Color.Green,
+            )
+        }
     }
 }
 
