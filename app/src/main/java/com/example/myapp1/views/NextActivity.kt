@@ -49,4 +49,5 @@ fun GreetingPreview2() {
 fun main() {
     val person = Person("John", 31)
     println(person.copy(age = 40))
+    println("John is now ${person.age} years old")
 }
