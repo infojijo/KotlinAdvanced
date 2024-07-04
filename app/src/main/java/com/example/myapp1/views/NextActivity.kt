@@ -48,6 +48,19 @@ fun GreetingPreview2() {
 
 fun main() {
     val person = Person("John", 31)
+    val deciderAge = 5
     println(person.copy(age = 40))
     println("John is now ${person.age} years old")
+    val listOfPersons = mutableListOf<Person>()
+    for (i in 1..10) {
+        listOfPersons.add(Person("Name $i", i))
+    }
+    listOfPersons.map {
+        it.group = if (it.age > deciderAge) {
+            "Young"
+        } else {
+            "Child"
+        }
+    }
+    println(listOfPersons)
 }
