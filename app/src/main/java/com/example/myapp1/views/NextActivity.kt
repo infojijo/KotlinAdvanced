@@ -69,5 +69,6 @@ fun main() {
             listOfPersons.filter { it.age > 4 }.apply { println("Size->${this.size}") }
         }"
     )
-
+    println("All are above 4 ? :  ${listOfPersons.all { it.age > 4 }}")
+    println("Anyone older than 4? :  ${listOfPersons.any { it.age > 4 }}")
 }
