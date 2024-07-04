@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.myapp1.models.Person
 import com.example.myapp1.views.ui.theme.MyApp1Theme
 
 class NextActivity : ComponentActivity() {
@@ -43,4 +44,9 @@ fun GreetingPreview2() {
     MyApp1Theme {
         Greeting2("Android")
     }
+}
+
+fun main() {
+    val person = Person("John", 31)
+    println(person.copy(age = 40))
 }

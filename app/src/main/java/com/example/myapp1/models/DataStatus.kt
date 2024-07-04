@@ -1,6 +1,9 @@
 package com.example.myapp1.models
 
-data class DataStatus<out T>(val status: Status, val data: T? = null, val message: String? = null) {
+data class DataStatus<out T>(
+    val status: Status,
+    val data: T? = null,
+    val message: String? = null) {
 
     enum class Status {
         LOADING, SUCCESS, ERROR
