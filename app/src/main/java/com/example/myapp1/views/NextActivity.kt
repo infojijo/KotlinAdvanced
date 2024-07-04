@@ -62,5 +62,12 @@ fun main() {
             "Child"
         }
     }
-    println(listOfPersons)
+    println("List $listOfPersons".also { println("Size Before Filtering->${listOfPersons.size}") })
+    println("Find ${listOfPersons.find { it.age > 4 }}")
+    println(
+        "Filter ${
+            listOfPersons.filter { it.age > 4 }.apply { println("Size->${this.size}") }
+        }"
+    )
+
 }
