@@ -1,6 +1,7 @@
 package com.example.myapp1.models
 
 import com.example.myapp1.network.MyAPI
+import com.example.myapp1.network.MyRepository
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -12,22 +13,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 
-object ListRepository {
+class ListRepository(private val api: MyAPI) : MyRepository {
     private val HTTP_BASE_URL = "https://jsonplaceholder.typicode.com"
     private var returnList: List<Comments>? = null
-    private var api: MyAPI? = null
 
-    init {
-        api = Retrofit
-            .Builder()
-            .baseUrl(HTTP_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(MyAPI::class.java)
-    }
 
     //###############NOT USED################
-    @OptIn(DelicateCoroutinesApi::class)
+   /* @OptIn(DelicateCoroutinesApi::class)
     fun getNetworkResponse(): List<Comments>? {
 
         GlobalScope.launch(Dispatchers.IO) {
@@ -37,9 +29,9 @@ object ListRepository {
             }
         }
         return returnList
-    }
+    }*/
 
-    suspend fun getFlowResponse() = flow {
+    override suspend fun getFlowResponse() = flow {
         emit(DataStatus.loading())
         //for mocking the progress bar.
         delay(4000)

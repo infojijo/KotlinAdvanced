@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         item {
-                            ShowProgress(showProgress, false)
+                            ShowProgress(showProgress, true)
                         }
                         lifecycleScope.launch {
                             listViewModel.getFlowResult()
