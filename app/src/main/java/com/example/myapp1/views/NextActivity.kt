@@ -73,5 +73,5 @@ fun main() {
     println("Anyone older than 4? :  ${listOfPersons.any { it.age > 4 }}")
     listOfPersons.forEach { println("Name is -> ${it.name}") }
     println("Reduce Sample - Total Age value -> " +
-            "${listOfPersons.reduce { acc, person -> acc.copy(age = acc.age + person.age) }.age}")
+            "${listOfPersons.reduce { acc, persons -> acc.copy(age = acc.age + persons.age) }.age}")
 }
