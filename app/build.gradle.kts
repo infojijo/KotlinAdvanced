@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+    id("kotlin-kapt")
 }
 
 android {
@@ -53,36 +53,71 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
-    implementation("androidx.activity:activity-compose:1.9.0")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3:1.2.1")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
 
-    // retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    //gson
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    //coroutine flows
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
-    //android KTX
-    implementation("androidx.core:core-ktx:1.13.1")
-    //Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.49")
-    kapt ("com.google.dagger:hilt-compiler:2.44")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-    kapt ("androidx.hilt:hilt-compiler:1.2.0")
-    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    //navigation compose
+    implementation(libs.androidx.navigation.compose)
+    //hilt dagger
+    implementation(libs.androidx.hilt.viewmodel)
+    //  kapt(libs.androidx.hilt.compiler)
+    kapt(libs.google.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt)
+
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
+
+    //Room Database
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.androidx.room.compiler)
+    annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.guava)
+    // implementation(libs.androidx.room.coroutines)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.paging.guava)
+
+    // OkHttp3
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(platform(libs.okhttp.bom))
+
+    //coil image loader
+    implementation(libs.androidx.coil.compose)
+    //Glide image loader
+    implementation(libs.androidx.glider)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.androidx.glider.compiler)
+
+    //retrofit
+    implementation(libs.retrofit)
+    implementation(libs.google.gson)
+    implementation(libs.converter.gson)
+    implementation(libs.converter.jackson)
+    implementation(libs.converter.moshi)
+    implementation(libs.converter.scalars)
+    implementation(libs.retrofit.converters)
+    implementation(libs.retrofit.adapters)
+    //data store preferences
+    implementation(libs.androidx.datastore)
+
+
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    testImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }
