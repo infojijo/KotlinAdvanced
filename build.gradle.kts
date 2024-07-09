@@ -7,4 +7,5 @@ plugins {
     // alias(libs.plugins.ksp.version) apply false
     alias(libs.plugins.hilt.version) apply false
     alias(libs.plugins.room.version) apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
 }
