@@ -8,10 +8,12 @@ import com.example.myapp1.models.Comments
 import com.example.myapp1.models.DataStatus
 import com.example.myapp1.models.ListRepository
 import com.example.myapp1.network.MyAPI
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+@HiltViewModel
 class ListDataViewModel : ViewModel() {
     private var myList = mutableListOf<String>()
     private val _flowList = MutableLiveData<DataStatus<List<Comments>>>()
