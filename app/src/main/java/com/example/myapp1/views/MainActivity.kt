@@ -33,20 +33,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import com.example.myapp1.models.DataStatus
 import com.example.myapp1.viewmodels.ListDataViewModel
 import com.example.myapp1.views.theme.MyApp1Theme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val listViewModel by viewModels<ListDataViewModel>()
-
     @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp1Theme {
+                val listViewModel = hiltViewModel<ListDataViewModel>()
                 // A surface container using the 'background' color from the theme
                 val listState = rememberLazyListState()
                 val coroutineScope = rememberCoroutineScope()
