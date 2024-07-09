@@ -12,9 +12,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 @HiltViewModel
-class ListDataViewModel : ViewModel() {
+class ListDataViewModel @Inject constructor() : ViewModel() {
     private var myList = mutableListOf<String>()
     private val _flowList = MutableLiveData<DataStatus<List<Comments>>>()
     private var api: MyAPI

@@ -9,23 +9,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class ListRepository(private val api: MyAPI) : MyRepository {
-    private val HTTP_BASE_URL = "https://jsonplaceholder.typicode.com"
-    private var returnList: List<Comments>? = null
-
-
-    //###############NOT USED################
-   /* @OptIn(DelicateCoroutinesApi::class)
-    fun getNetworkResponse(): List<Comments>? {
-
-        GlobalScope.launch(Dispatchers.IO) {
-            val comments = api?.getComments()
-            if (comments?.isSuccessful == true) {
-                returnList = comments.body()!!
-            }
-        }
-        return returnList
-    }*/
-
     override suspend fun getFlowResponse() = flow {
         emit(DataStatus.loading())
         //for mocking the progress bar.
