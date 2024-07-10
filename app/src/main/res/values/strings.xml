@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">MyApp1</string>
+    <string name="app_name">Comments App</string>
     <string name="title_activity_next">NextActivity</string>
 </resources>
