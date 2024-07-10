@@ -1,8 +1,7 @@
-package com.example.myapp1.models
+package com.example.myapp1.repository
 
-import android.app.Application
-import com.example.myapp1.network.MyAPI
-import com.example.myapp1.network.MyRepository
+import com.example.myapp1.models.DataStatus
+import com.example.myapp1.network.CommentsAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
@@ -10,11 +9,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class ListRepositoryImpl @Inject constructor(
-    private val api: MyAPI
-) : MyRepository {
+class CommentsRepositoryImpl @Inject constructor(
+    private val api: CommentsAPI
+) : CommentsRepository {
 
-    override suspend fun getFlowResponse() = flow {
+    override suspend fun getCommentsFromAPI() = flow {
         emit(DataStatus.loading())
         //for mocking the progress bar.
         delay(4000)

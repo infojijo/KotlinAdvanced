@@ -1,7 +1,7 @@
 package com.example.myapp1.di
 
-import com.example.myapp1.models.ListRepositoryImpl
-import com.example.myapp1.network.MyRepository
+import com.example.myapp1.repository.CommentsRepositoryImpl
+import com.example.myapp1.repository.CommentsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -10,11 +10,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class ListModule {
+abstract class RepositoryModule {
 
     @Binds
     @Singleton
     abstract fun bindMyRepository(
-        myRepositoryImpl: ListRepositoryImpl
-    ): MyRepository
+        myRepositoryImpl: CommentsRepositoryImpl
+    ): CommentsRepository
 }

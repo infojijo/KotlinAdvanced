@@ -3,7 +3,6 @@ package com.example.myapp1.views
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import com.example.myapp1.models.DataStatus
-import com.example.myapp1.viewmodels.ListDataViewModel
+import com.example.myapp1.viewmodels.CommentsListViewModel
 import com.example.myapp1.views.theme.MyApp1Theme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,7 +47,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp1Theme {
-                val listViewModel = hiltViewModel<ListDataViewModel>()
+                val commentsListViewModel = hiltViewModel<CommentsListViewModel>()
                 // A surface container using the 'background' color from the theme
                 val listState = rememberLazyListState()
                 val coroutineScope = rememberCoroutineScope()
@@ -71,8 +70,8 @@ class MainActivity : ComponentActivity() {
                             ShowProgress(showProgress, true)
                         }
                         lifecycleScope.launch {
-                            listViewModel.getFlowResult()
-                            listViewModel.flowList.observe(
+                            commentsListViewModel.getComments()
+                            commentsListViewModel.flowList.observe(
                                 this@MainActivity,
                             ) { commentList ->
                                 when (commentList.status) {

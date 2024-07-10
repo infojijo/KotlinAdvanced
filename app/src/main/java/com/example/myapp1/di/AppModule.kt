@@ -1,7 +1,6 @@
 package com.example.myapp1.di
 
-import com.example.myapp1.network.MyAPI
-import com.example.myapp1.network.MyRepository
+import com.example.myapp1.network.CommentsAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,16 +12,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    private val HTTP_BASE_URL = "https://jsonplaceholder.typicode.com"
+    private const val HTTP_BASE_URL = "https://jsonplaceholder.typicode.com"
 
     @Provides
     @Singleton
-    fun provideMyApi(): MyAPI {
+    fun provideMyApi(): CommentsAPI {
         return Retrofit
             .Builder()
             .baseUrl(HTTP_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(MyAPI::class.java)
+            .create(CommentsAPI::class.java)
     }
 }
