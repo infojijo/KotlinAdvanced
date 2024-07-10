@@ -16,7 +16,7 @@ class CommentsRepositoryImpl @Inject constructor(
     override suspend fun getCommentsFromAPI() = flow {
         emit(DataStatus.loading())
         //for mocking the progress bar.
-        delay(timeMillis = 4000)
+        delay(timeMillis = TIME_DELAY)
         val result = api.getComments()
         when (result.code()) {
             200 -> {
@@ -28,4 +28,8 @@ class CommentsRepositoryImpl @Inject constructor(
             emit(DataStatus.error("Error"))
         }
         .flowOn(Dispatchers.IO)
+
+    companion object {
+        const val TIME_DELAY: Long = 4000
+    }
 }
