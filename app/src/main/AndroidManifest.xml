@@ -21,7 +21,7 @@
             android:label="@string/title_activity_next"
             android:theme="@style/Theme.MyApp1" />
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.CommentsActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApp1">
             <intent-filter>

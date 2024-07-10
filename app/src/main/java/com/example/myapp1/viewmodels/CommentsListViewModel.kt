@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CommentsListViewModel @Inject constructor(private val commentsRepository: CommentsRepository) : ViewModel() {
+class CommentsListViewModel @Inject constructor(private val commentsRepository: CommentsRepository)
+    : ViewModel() {
     private val _flowList = MutableLiveData<DataStatus<List<Comments>>>()
     val flowList: LiveData<DataStatus<List<Comments>>>
         get() = _flowList
