@@ -8,8 +8,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class ListRepository(private val api: MyAPI, app: Application) : MyRepository {
+class ListRepositoryImpl @Inject constructor(
+    private val api: MyAPI
+) : MyRepository {
+
     override suspend fun getFlowResponse() = flow {
         emit(DataStatus.loading())
         //for mocking the progress bar.

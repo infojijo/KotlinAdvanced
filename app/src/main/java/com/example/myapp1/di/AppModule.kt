@@ -1,7 +1,5 @@
 package com.example.myapp1.di
 
-import android.app.Application
-import com.example.myapp1.models.ListRepository
 import com.example.myapp1.network.MyAPI
 import com.example.myapp1.network.MyRepository
 import dagger.Module
@@ -26,11 +24,5 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(MyAPI::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideMyRepo(api: MyAPI, app : Application): MyRepository {
-        return ListRepository(api, app)
     }
 }
