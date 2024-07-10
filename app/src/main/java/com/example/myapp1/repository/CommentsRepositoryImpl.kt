@@ -2,6 +2,7 @@ package com.example.myapp1.repository
 
 import com.example.myapp1.models.DataStatus
 import com.example.myapp1.network.CommentsAPI
+import com.example.myapp1.repository.Utils.Companion.RESULT_SUCCESS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
@@ -20,7 +21,7 @@ class CommentsRepositoryImpl @Inject constructor(
         delay(timeMillis = TIME_DELAY)
         val result = api.getComments()
         when (result.code()) {
-            200 -> {
+            RESULT_SUCCESS -> {
                 emit(DataStatus.success(result.body()))
             }
         }
