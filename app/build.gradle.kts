@@ -118,8 +118,6 @@ dependencies {
     // Accompanist
     implementation(libs.accompanist.permission)
 
-
-
     testImplementation(libs.junit)
     testImplementation(libs.mockwebserver)
     testImplementation(libs.androidx.core.test)

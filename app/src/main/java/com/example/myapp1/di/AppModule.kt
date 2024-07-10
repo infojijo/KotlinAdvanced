@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
+import retrofit2.Retrofit.*
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -17,8 +17,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMyApi(): CommentsAPI {
-        return Retrofit
-            .Builder()
+        return Builder()
             .baseUrl(HTTP_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
