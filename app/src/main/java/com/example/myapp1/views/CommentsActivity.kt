@@ -79,8 +79,15 @@ class CommentsActivity : ComponentActivity() {
                                     DataStatus.Status.LOADING -> {}
                                     DataStatus.Status.SUCCESS -> {
                                         showProgress = false
-                                        for (comment in commentList.data!!) {
-                                            item {
+                                        commentList.data!!.forEachIndexed { index, comment ->
+                                            val backgroundColor =
+                                                if (index % 2 == 0) Color.LightGray else Color.White
+                                        item {
+                                            Column(
+                                                modifier = Modifier
+                                                    .background(backgroundColor)
+                                                    .fillMaxSize()
+                                            ) {
                                                 Box(
                                                     modifier =
                                                     Modifier
@@ -116,20 +123,21 @@ class CommentsActivity : ComponentActivity() {
                                                 }
                                             }
                                         }
-                                        coroutineScope.launch { listState.scrollToItem(0) }
-                                        item {
-                                            Button(onClick = {
-                                                coroutineScope.launch {
-                                                    listState.scrollToItem(0)
-                                                }
-                                            }) {
-                                                Text(text = "Scroll to Top")
-                                            }
-                                        }
                                     }
 
-                                    DataStatus.Status.ERROR -> {}
+                                    coroutineScope.launch { listState.scrollToItem(0) }
+                                            item {
+                                        Button(onClick = {
+                                            coroutineScope.launch {
+                                                listState.scrollToItem(0)
+                                            }
+                                        }) {
+                                            Text(text = "Scroll to Top")
+                                        }
+                                    }
                                 }
+
+                                DataStatus.Status.ERROR -> {}
                             }
                         }
                     }
@@ -137,6 +145,7 @@ class CommentsActivity : ComponentActivity() {
             }
         }
     }
+}
 }
 
 @Composable
