@@ -41,7 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class CommentsActivity : ComponentActivity() {
     @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
                         lifecycleScope.launch {
                             commentsListViewModel.getComments()
                             commentsListViewModel.flowList.observe(
-                                this@MainActivity,
+                                this@CommentsActivity,
                             ) { commentList ->
                                 when (commentList.status) {
                                     DataStatus.Status.LOADING -> {}
