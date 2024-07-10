@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
+import com.example.myapp1.repository.Utils.Companion.TIME_DELAY
 
 class CommentsRepositoryImpl @Inject constructor(
     private val api: CommentsAPI
@@ -28,8 +29,4 @@ class CommentsRepositoryImpl @Inject constructor(
             emit(DataStatus.error("Error"))
         }
         .flowOn(Dispatchers.IO)
-
-    companion object {
-        const val TIME_DELAY: Long = 4000
-    }
 }

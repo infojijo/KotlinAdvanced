@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import com.example.myapp1.models.DataStatus
+import com.example.myapp1.repository.Utils.Companion.TIME_DELAY
 import com.example.myapp1.viewmodels.CommentsListViewModel
 import com.example.myapp1.views.theme.MyApp1Theme
 import dagger.hilt.android.AndroidEntryPoint
@@ -197,5 +198,5 @@ fun needMat(exercise: Exercise) : Boolean {
 fun main1() {
     println("Hello, world!!!")
     val testString = "Welcome@2020 "+"hello 123"
-    println(testString)
+    println(testString+TIME_DELAY)
 }
