@@ -36,8 +36,6 @@ pagingCompose = "3.3.0"
 accompanistPermissions = "0.34.0"
 ktlint = "10.3.0"
 
-
-
 [libraries]
 # Accompanist
 accompanist-permission = { group="com.google.accompanist", name="accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -98,7 +96,6 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore_preference" }
 androidx-paging = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingRuntime" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose" }
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "library" }
