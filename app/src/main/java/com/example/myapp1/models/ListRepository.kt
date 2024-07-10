@@ -1,5 +1,6 @@
 package com.example.myapp1.models
 
+import android.app.Application
 import com.example.myapp1.network.MyAPI
 import com.example.myapp1.network.MyRepository
 import kotlinx.coroutines.Dispatchers
@@ -8,7 +9,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-class ListRepository(private val api: MyAPI) : MyRepository {
+class ListRepository(private val api: MyAPI, app: Application) : MyRepository {
     override suspend fun getFlowResponse() = flow {
         emit(DataStatus.loading())
         //for mocking the progress bar.

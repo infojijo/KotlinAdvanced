@@ -1,5 +1,6 @@
 package com.example.myapp1.di
 
+import android.app.Application
 import com.example.myapp1.models.ListRepository
 import com.example.myapp1.network.MyAPI
 import com.example.myapp1.network.MyRepository
@@ -29,7 +30,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMyRepo(api: MyAPI): MyRepository {
-        return ListRepository(api)
+    fun provideMyRepo(api: MyAPI, app : Application): MyRepository {
+        return ListRepository(api, app)
     }
 }
