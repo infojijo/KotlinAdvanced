@@ -1,6 +1,7 @@
 package com.example.myapp1.di
 
 import com.example.myapp1.network.CommentsAPI
+import com.example.myapp1.repository.Utils.Companion.API_BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,13 +13,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    private const val HTTP_BASE_URL = "https://jsonplaceholder.typicode.com"
-
     @Provides
     @Singleton
     fun provideMyApi(): CommentsAPI {
         return Builder()
-            .baseUrl(HTTP_BASE_URL)
+            .baseUrl(API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(CommentsAPI::class.java)
