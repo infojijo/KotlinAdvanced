@@ -87,8 +87,19 @@ class CommentsActivity : ComponentActivity() {
                                                         .padding(10.dp),
                                                 ) {
                                                     Text(
-                                                        text = comment.id.toString() + " - " + comment.email,
-                                                        fontSize = 18.sp,
+                                                        text = """# ${comment.id} - ${comment.name}""",
+                                                        fontSize = 16.sp,
+                                                        color = Color.Black.copy(alpha = 0.5f),
+                                                    )
+                                                }
+                                                Box(
+                                                    modifier =
+                                                    Modifier
+                                                        .padding(10.dp),
+                                                ) {
+                                                    Text(
+                                                        text = comment.email,
+                                                        fontSize = 15.sp,
                                                         color = Color.Black.copy(alpha = 0.5f),
                                                     )
                                                 }
@@ -178,7 +189,7 @@ fun GreetingPreview() {
 }
 
 sealed class Exercise {
-    class Run(val numLaps : Int) : Exercise()
+    class Run(val numLaps: Int) : Exercise()
     class Yoga(val numMinutes: Int) : Exercise()
 }
 
@@ -187,7 +198,7 @@ fun main() {
     println(needMat(exercise))
 }
 
-fun needMat(exercise: Exercise) : Boolean {
+fun needMat(exercise: Exercise): Boolean {
     return when (exercise) {
         is Exercise.Run -> false
         is Exercise.Yoga -> true
@@ -197,6 +208,6 @@ fun needMat(exercise: Exercise) : Boolean {
 
 fun main1() {
     println("Hello, world!!!")
-    val testString = "Welcome@2020 "+"hello 123"
-    println(testString+TIME_DELAY)
+    val testString = "Welcome@2020 " + "hello 123"
+    println(testString + TIME_DELAY)
 }
