@@ -20,7 +20,7 @@ class CommentsListViewModel @Inject constructor(private val commentsRepository: 
 
     fun getComments() {
         viewModelScope.launch {
-            commentsRepository.getCommentsFromAPI().collect {
+            commentsRepository.getCommentsFromAPIForId(2).collect {
                 _flowList.value = it
             }
         }

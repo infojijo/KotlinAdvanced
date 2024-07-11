@@ -1,10 +1,12 @@
 package com.example.myapp1.views
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,6 +56,7 @@ class CommentsActivity : ComponentActivity() {
                 val listState = rememberLazyListState()
                 val coroutineScope = rememberCoroutineScope()
                 var showProgress by remember { mutableStateOf(true) }
+                val mContext = LocalContext.current
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = Color.White,
@@ -66,6 +70,11 @@ class CommentsActivity : ComponentActivity() {
                             Text(
                                 text = "Welcome $text,",
                             )
+                            Button(onClick = {
+                                mContext.startActivity(Intent(mContext, NextActivity::class.java))
+                            }) {
+                                Text(text = "Navigate to Next Activity")
+                            }
                         }
                         item {
                             ShowProgress(showProgress, true)
@@ -82,62 +91,71 @@ class CommentsActivity : ComponentActivity() {
                                         commentList.data!!.forEachIndexed { index, comment ->
                                             val backgroundColor =
                                                 if (index % 2 == 0) Color.LightGray else Color.White
-                                        item {
-                                            Column(
-                                                modifier = Modifier
-                                                    .background(backgroundColor)
-                                                    .fillMaxSize()
-                                            ) {
-                                                Box(
-                                                    modifier =
-                                                    Modifier
-                                                        .padding(10.dp),
-                                                ) {
-                                                    Text(
-                                                        text = """# ${comment.id} - ${comment.name}""",
-                                                        fontSize = 16.sp,
-                                                        color = Color.Black.copy(alpha = 0.5f),
-                                                    )
-                                                }
-                                                Box(
-                                                    modifier =
-                                                    Modifier
-                                                        .padding(10.dp),
-                                                ) {
-                                                    Text(
-                                                        text = comment.email,
-                                                        fontSize = 15.sp,
-                                                        color = Color.Black.copy(alpha = 0.5f),
-                                                    )
-                                                }
-                                                Box(
-                                                    modifier =
-                                                    Modifier
-                                                        .padding(10.dp),
-                                                ) {
-                                                    Text(
-                                                        text = comment.body,
-                                                        fontSize = 14.sp,
-                                                        color = Color.Black.copy(alpha = 0.5f),
-                                                    )
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    coroutineScope.launch { listState.scrollToItem(0) }
                                             item {
-                                        Button(onClick = {
-                                            coroutineScope.launch {
-                                                listState.scrollToItem(0)
+                                                Column(
+                                                    modifier = Modifier
+                                                        .background(backgroundColor)
+                                                        .fillMaxSize()
+                                                        .clickable {
+                                                            mContext.startActivity(
+                                                                Intent(
+                                                                    mContext,
+                                                                    NextActivity::class.java
+                                                                )
+                                                            )
+                                                        }
+                                                ) {
+                                                    Box(
+                                                        modifier =
+                                                        Modifier
+                                                            .padding(10.dp),
+                                                    ) {
+                                                        Text(
+                                                            text = """# ${comment.id} - ${comment.name}""",
+                                                            fontSize = 16.sp,
+                                                            color = Color.Black.copy(alpha = 0.5f),
+                                                        )
+                                                    }
+                                                    Box(
+                                                        modifier =
+                                                        Modifier
+                                                            .padding(10.dp),
+                                                    ) {
+                                                        Text(
+                                                            text = comment.email,
+                                                            fontSize = 15.sp,
+                                                            color = Color.Black.copy(alpha = 0.5f),
+                                                        )
+                                                    }
+                                                    Box(
+                                                        modifier =
+                                                        Modifier
+                                                            .padding(10.dp),
+                                                    ) {
+                                                        Text(
+                                                            text = comment.body,
+                                                            fontSize = 14.sp,
+                                                            color = Color.Black.copy(alpha = 0.5f),
+                                                        )
+                                                    }
+                                                }
                                             }
-                                        }) {
-                                            Text(text = "Scroll to Top")
+                                        }
+
+                                        coroutineScope.launch { listState.scrollToItem(0) }
+                                        item {
+                                            Button(onClick = {
+                                                coroutineScope.launch {
+                                                    listState.scrollToItem(0)
+                                                }
+                                            }) {
+                                                Text(text = "Scroll to Top")
+                                            }
                                         }
                                     }
-                                }
 
-                                DataStatus.Status.ERROR -> {}
+                                    DataStatus.Status.ERROR -> {}
+                                }
                             }
                         }
                     }
@@ -145,7 +163,6 @@ class CommentsActivity : ComponentActivity() {
             }
         }
     }
-}
 }
 
 @Composable

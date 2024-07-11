@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CommentsRepository {
     suspend fun getCommentsFromAPI(): Flow<DataStatus<List<Comments>>>
+    suspend fun getCommentsFromAPIForId(postId: Int): Flow<DataStatus<List<Comments>>>
 }
