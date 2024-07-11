@@ -1,11 +1,9 @@
 package com.example.myapp1.views
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,8 +29,10 @@ import com.example.myapp1.models.DataStatus
 import com.example.myapp1.models.Person
 import com.example.myapp1.viewmodels.CommentsListViewModel
 import com.example.myapp1.views.ui.theme.MyApp1Theme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class NextActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
