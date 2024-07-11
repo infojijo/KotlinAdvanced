@@ -101,6 +101,9 @@ class CommentsActivity : ComponentActivity() {
                                                                 Intent(
                                                                     mContext,
                                                                     NextActivity::class.java
+                                                                ).putExtra(
+                                                                    "POST_ID",
+                                                                    comment.postId
                                                                 )
                                                             )
                                                         }

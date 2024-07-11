@@ -23,7 +23,7 @@ class NextActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting2("Android")
+                    Greeting2(intent.extras?.getInt("POST_ID").toString())
                 }
             }
         }
@@ -73,5 +73,6 @@ fun main() {
     println("Anyone older than 4? :  ${listOfPersons.any { it.age > 4 }}")
     listOfPersons.forEach { println("Name is -> ${it.name}") }
     println("Reduce Sample - Total Age value -> " +
-            "${listOfPersons.reduce { acc, persons -> acc.copy(age = acc.age + persons.age) }.age}")
+            "${listOfPersons.reduce { acc, persons -> acc.copy(age = acc.age + persons.age) }.age}"
+    )
 }
