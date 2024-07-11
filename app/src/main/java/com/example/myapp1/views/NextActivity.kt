@@ -3,6 +3,7 @@ package com.example.myapp1.views
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -17,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,19 +37,29 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NextActivity : ComponentActivity() {
+    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp1Theme {
                 val commentsListViewModel = hiltViewModel<CommentsListViewModel>()
                 var showProgress by remember { mutableStateOf(true) }
+                val listState = rememberLazyListState()
+                val coroutineScope = rememberCoroutineScope()
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(10.dp),
+                        state = listState
                     ) {
+                        stickyHeader {
+                            val text = intent.getIntExtra("POST_ID", 0)
+                            Text(
+                                text = "Comments from  $text,",
+                            )
+                        }
                         lifecycleScope.launch {
                             commentsListViewModel.getCommentsForId(intent.getIntExtra("POST_ID", 0))
                             commentsListViewModel.commentList.observe(
@@ -100,7 +113,9 @@ class NextActivity : ComponentActivity() {
                                                 }
                                             }
                                         }
+                                        coroutineScope.launch { listState.scrollToItem(0) }
                                     }
+
                                     DataStatus.Status.ERROR -> {}
                                 }
                             }
@@ -110,6 +125,7 @@ class NextActivity : ComponentActivity() {
             }
         }
     }
+
     @Composable
     fun Greeting2(name: String, modifier: Modifier = Modifier) {
         Text(
@@ -156,4 +172,5 @@ class NextActivity : ComponentActivity() {
             "Reduce Sample - Total Age value -> " +
                     "${listOfPersons.reduce { acc, persons -> acc.copy(age = acc.age + persons.age) }.age}"
         )
-  }}
+    }
+}
