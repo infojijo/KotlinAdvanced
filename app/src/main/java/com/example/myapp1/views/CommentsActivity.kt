@@ -69,9 +69,15 @@ class CommentsActivity : ComponentActivity() {
                             Text(
                                 text = "Welcome $text,",
                             )
-                            Button(onClick = {
-                                mContext.startActivity(Intent(mContext, NextActivity::class.java))
-                            }) {
+                            Button(modifier = Modifier.fillMaxSize(),
+                                onClick = {
+                                    mContext.startActivity(
+                                        Intent(
+                                            mContext,
+                                            NextActivity::class.java
+                                        )
+                                    )
+                                }) {
                                 Text(text = "Navigate to Next Activity")
                             }
                         }

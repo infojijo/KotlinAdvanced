@@ -48,7 +48,7 @@ class NextActivity : ComponentActivity() {
                 val coroutineScope = rememberCoroutineScope()
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = Color.White,
                 ) {
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -72,6 +72,19 @@ class NextActivity : ComponentActivity() {
                                     DataStatus.Status.LOADING -> {}
                                     DataStatus.Status.SUCCESS -> {
                                         showProgress = false
+                                        item {
+                                            Box(
+                                                modifier =
+                                                Modifier
+                                                    .padding(10.dp),
+                                            ) {
+                                                Text(
+                                                    text = "There are - ${commentList.data!!.size} comments..",
+                                                    fontSize = 16.sp,
+                                                    color = Color.Black.copy(alpha = 0.5f),
+                                                )
+                                            }
+                                        }
                                         commentList.data!!.forEachIndexed { index, comment ->
                                             val backgroundColor =
                                                 if (index % 2 == 0) Color.LightGray else Color.White
