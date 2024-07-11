@@ -18,14 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import com.example.myapp1.models.Person
 import com.example.myapp1.viewmodels.CommentsListViewModel
 import com.example.myapp1.views.ui.theme.MyApp1Theme
+import kotlinx.coroutines.launch
 
 class NextActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //intent.getIntExtra("POST_ID",0)
         setContent {
             MyApp1Theme {
                 val commentsListViewModel = hiltViewModel<CommentsListViewModel>()
@@ -37,7 +38,14 @@ class NextActivity : ComponentActivity() {
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
+                        lifecycleScope.launch {
+                            commentsListViewModel.getCommentsForId(intent.getIntExtra("POST_ID", 0))
+                            commentsListViewModel.commentList.observe(
+                                this@NextActivity,
+                            ) {
 
+                            }
+                        }
                     }
                 }
             }
