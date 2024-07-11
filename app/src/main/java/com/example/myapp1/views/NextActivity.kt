@@ -60,6 +60,9 @@ class NextActivity : ComponentActivity() {
                                 text = "Comments from  $text,",
                             )
                         }
+                        item {
+                            ShowProgress(showProgress, false)
+                        }
                         lifecycleScope.launch {
                             commentsListViewModel.getCommentsForId(intent.getIntExtra("POST_ID", 0))
                             commentsListViewModel.commentList.observe(
@@ -68,6 +71,7 @@ class NextActivity : ComponentActivity() {
                                 when (commentList.status) {
                                     DataStatus.Status.LOADING -> {}
                                     DataStatus.Status.SUCCESS -> {
+                                        showProgress = false
                                         commentList.data!!.forEachIndexed { index, comment ->
                                             val backgroundColor =
                                                 if (index % 2 == 0) Color.LightGray else Color.White
