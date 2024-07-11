@@ -156,4 +156,4 @@ class NextActivity : ComponentActivity() {
             "Reduce Sample - Total Age value -> " +
                     "${listOfPersons.reduce { acc, persons -> acc.copy(age = acc.age + persons.age) }.age}"
         )
-  }}  }
+  }}
