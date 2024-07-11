@@ -52,7 +52,6 @@ class CommentsActivity : ComponentActivity() {
         setContent {
             MyApp1Theme {
                 val commentsListViewModel = hiltViewModel<CommentsListViewModel>()
-                // A surface container using the 'background' color from the theme
                 val listState = rememberLazyListState()
                 val coroutineScope = rememberCoroutineScope()
                 var showProgress by remember { mutableStateOf(true) }
@@ -81,7 +80,7 @@ class CommentsActivity : ComponentActivity() {
                         }
                         lifecycleScope.launch {
                             commentsListViewModel.getComments()
-                            commentsListViewModel.flowList.observe(
+                            commentsListViewModel.commentList.observe(
                                 this@CommentsActivity,
                             ) { commentList ->
                                 when (commentList.status) {

@@ -14,14 +14,22 @@ import javax.inject.Inject
 @HiltViewModel
 class CommentsListViewModel @Inject constructor(private val commentsRepository: CommentsRepository)
     : ViewModel() {
-    private val _flowList = MutableLiveData<DataStatus<List<Comments>>>()
-    val flowList: LiveData<DataStatus<List<Comments>>>
-        get() = _flowList
+    private val _commentList = MutableLiveData<DataStatus<List<Comments>>>()
+    val commentList: LiveData<DataStatus<List<Comments>>>
+        get() = _commentList
 
     fun getComments() {
         viewModelScope.launch {
-            commentsRepository.getCommentsFromAPIForId(2).collect {
-                _flowList.value = it
+            commentsRepository.getCommentsFromAPI().collect {
+                _commentList.value = it
+            }
+        }
+    }
+
+    fun getCommentsForId(postId: Int) {
+        viewModelScope.launch {
+            commentsRepository.getCommentsFromAPIForId(postId).collect {
+                _commentList.value = it
             }
         }
     }
