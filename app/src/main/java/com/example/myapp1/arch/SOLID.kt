@@ -2,10 +2,15 @@ package com.example.myapp1.arch
 
 fun main() {
     println("Welcome to SOLID World!!")
-    val dr = Car()
-    print("${dr.make} - ${dr.yom} - is ").also { dr.d() }
+    //Composition of
+    val car = Car()
+    val mode = Forward()
+    val mode2 = Reverse()
+    print("${car.make} - ${car.yom} - is ").also { mode.drive() }
+    print("${car.make} - ${car.yom} - is ").also { mode2.drive() }
 }
 
+// not a SOLID design principle approach - NOT RECOMMENDED
 open class Drive {
     fun d() {
         println("driving -> in DRIVE mode")
@@ -20,25 +25,27 @@ open class Drive {
     }
 }
 
-
-class Car() : Drive() {
+//Car class has a DriveMode
+class Car {
     var make: String = "Honda"
     var yom: Int = 2016
 }
 
+//DriveMode is implemented in Forward and Reverse Classes
 interface DriveMode {
     fun drive()
 }
 
-open class Forward : DriveMode {
+//Individual behaviors / usecases for Forward functionalities
+class Forward : DriveMode {
     override fun drive() {
-        println("from->${javaClass.name}")
+        println("driving -> in DRIVE mode")
     }
-
 }
 
-open class Reverse : DriveMode {
+//Individual behaviors / usecases for Reverse functionalities
+class Reverse : DriveMode {
     override fun drive() {
-        println("from->${javaClass.name}")
+        println("driving -> in REVERSE mode")
     }
 }
