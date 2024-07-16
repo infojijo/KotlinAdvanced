@@ -5,11 +5,12 @@ fun main() {
     //Composition of
     val car = Car()
     val jeep = Jeep()
+    val subCar = SubCar()
     val mode = Forward()
     val mode2 = Reverse()
     print("${car.make} - ${car.yom} - is ").also { mode.drive() }
     print("${car.make} - ${car.yom} - is ").also { mode2.drive() }
-    washVehicle(car = jeep)
+    washVehicleLiskov(car = subCar)
 }
 
 // not a SOLID design principle approach - NOT RECOMMENDED
@@ -54,17 +55,26 @@ class Reverse : DriveMode {
 
 //LISKOV, SUBSTITUTION Principle
 fun washVehicle(car: Car) {
-    if (car is Jeep){
+    if (car is Jeep) {
         println("washing Car with-> ${car.numberOfTire} tires")
-    }else{
+    } else {
         println("washing Car of -> ${car.yom} made")
     }
-
 }
 
-//Car class has a DriveMode
+//Here Jeep class is not a substitution for Car since it has a different member variable.
 class Jeep : Car() {
     override var make: String = "Jeep"
     override var yom: Int = 2017
     var numberOfTire: Int = 4
+}
+
+//this new class is adhering the Liskov's Substitution Principle
+class SubCar : Car() {
+    override var make: String = "Hyndai"
+    override var yom: Int = 2016
+}
+
+fun washVehicleLiskov(car: Car) {
+    println("washing ${car.make} of -> ${car.yom} made")
 }
