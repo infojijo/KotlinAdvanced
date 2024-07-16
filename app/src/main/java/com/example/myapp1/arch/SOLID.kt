@@ -78,3 +78,30 @@ class SubCar : Car() {
 fun washVehicleLiskov(car: Car) {
     println("washing ${car.make} of -> ${car.yom} made")
 }
+
+interface ServiceCar {
+    //payment for different Services.
+    fun payService()
+
+    //regular low cost Services
+    fun washService()
+    fun vacuumService()
+
+    //regular must have Service
+    fun fillGas()
+    fun fillAir()
+
+    //yearly Services
+    fun tireExchangeService()
+    fun generalService()
+}
+//Here the functions are LOW cohesive
+class CarYearlyServiceDue : ServiceCar {
+    override fun payService() { println("Payment Done") }
+    override fun washService() { println("N/A") }
+    override fun vacuumService() { println("N/A") }
+    override fun fillGas() { println("N/A") }
+    override fun fillAir() { println("N/A") }
+    override fun tireExchangeService() { println("Seasonal Tire Change Done") }
+    override fun generalService() { println("General Service Done") }
+}
