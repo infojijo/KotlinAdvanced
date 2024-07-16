@@ -78,30 +78,32 @@ class SubCar : Car() {
 fun washVehicleLiskov(car: Car) {
     println("washing ${car.make} of -> ${car.yom} made")
 }
-
+// Segregated the Interfaces according to its functional COHESION.
 interface ServiceCar {
     //payment for different Services.
     fun payService()
+}
 
-    //regular low cost Services
-    fun washService()
-    fun vacuumService()
-
-    //regular must have Service
-    fun fillGas()
-    fun fillAir()
-
+interface YearlyCarService {
     //yearly Services
     fun tireExchangeService()
     fun generalService()
 }
+
+interface RegularGasService {
+    //regular must have Service
+    fun fillGas()
+    fun fillAir()
+}
+
+interface CarWashService {
+    //regular low cost Services
+    fun washService()
+    fun vacuumService()
+}
 //Here the functions are LOW cohesive
-class CarYearlyServiceDue : ServiceCar {
+class CarYearlyServiceDue : ServiceCar, YearlyCarService {
     override fun payService() { println("Payment Done") }
-    override fun washService() { println("N/A") }
-    override fun vacuumService() { println("N/A") }
-    override fun fillGas() { println("N/A") }
-    override fun fillAir() { println("N/A") }
     override fun tireExchangeService() { println("Seasonal Tire Change Done") }
     override fun generalService() { println("General Service Done") }
 }
