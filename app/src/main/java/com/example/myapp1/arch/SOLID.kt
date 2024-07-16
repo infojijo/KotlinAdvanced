@@ -4,10 +4,12 @@ fun main() {
     println("Welcome to SOLID World!!")
     //Composition of
     val car = Car()
+    val jeep = Jeep()
     val mode = Forward()
     val mode2 = Reverse()
     print("${car.make} - ${car.yom} - is ").also { mode.drive() }
     print("${car.make} - ${car.yom} - is ").also { mode2.drive() }
+    washVehicle(car = jeep)
 }
 
 // not a SOLID design principle approach - NOT RECOMMENDED
@@ -26,9 +28,9 @@ open class Drive {
 }
 
 //Car class has a DriveMode
-class Car {
-    var make: String = "Honda"
-    var yom: Int = 2016
+open class Car {
+    open var make: String = "Honda"
+    open var yom: Int = 2016
 }
 
 //DriveMode is implemented in Forward and Reverse Classes
@@ -48,4 +50,21 @@ class Reverse : DriveMode {
     override fun drive() {
         println("driving -> in REVERSE mode")
     }
+}
+
+//LISKOV, SUBSTITUTION Principle
+fun washVehicle(car: Car) {
+    if (car is Jeep){
+        println("washing Car with-> ${car.numberOfTire} tires")
+    }else{
+        println("washing Car of -> ${car.yom} made")
+    }
+
+}
+
+//Car class has a DriveMode
+class Jeep : Car() {
+    override var make: String = "Jeep"
+    override var yom: Int = 2017
+    var numberOfTire: Int = 4
 }
