@@ -76,15 +76,10 @@ class CommentsActivity : ComponentActivity() {
                             { this.isProgressShowing() },
                             { this.getCommentList() },
                             {
-                                mContext.startActivity(
-                                    Intent(
-                                        mContext,
-                                        NextActivity::class.java
-                                    )
-                                )
+                                navigateToNextActivity(mContext = mContext, postID = null)
                             },
                             {
-                                navigateToNextActivity(mContext, it)
+                                navigateToNextActivity(mContext = mContext, postID = it)
                             }
                         )
                     }
@@ -94,14 +89,14 @@ class CommentsActivity : ComponentActivity() {
         }
     }
 
-    private fun navigateToNextActivity(mContext: Context, postID: Int) {
+    private fun navigateToNextActivity(mContext: Context, postID: Int?) {
         mContext.startActivity(
             Intent(
                 mContext,
                 NextActivity::class.java
             ).putExtra(
                 "POST_ID",
-                postID
+                postID ?: 0
             )
         )
     }
