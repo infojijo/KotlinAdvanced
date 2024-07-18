@@ -43,7 +43,6 @@ import com.example.myapp1.repository.Utils.Companion.TIME_DELAY
 import com.example.myapp1.viewmodels.CommentsListViewModel
 import com.example.myapp1.views.theme.MyApp1Theme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -64,8 +63,6 @@ class CommentsActivity : ComponentActivity() {
                         LazyColumnFun(
                             intent,
                             this@CommentsActivity,
-                            listState,
-                            coroutineScope,
                             lifecycleScope, {
                                 coroutineScope.launch {
                                     listState.scrollToItem(0)
@@ -80,7 +77,8 @@ class CommentsActivity : ComponentActivity() {
                             },
                             {
                                 navigateToNextActivity(mContext = mContext, postID = it)
-                            }
+                            },
+                            { listState }
                         )
                     }
 
@@ -107,8 +105,6 @@ class CommentsActivity : ComponentActivity() {
 fun LazyColumnFun(
     intent: Intent,
     commentsActivity: CommentsActivity,
-    listState: LazyListState,
-    coroutineScope: CoroutineScope,
     lifecycleScope: LifecycleCoroutineScope,
     onButtonOnClickListener: () -> Unit,
     hideProgress: () -> Unit,
@@ -116,10 +112,11 @@ fun LazyColumnFun(
     isProgressShowing: () -> Boolean,
     getCommentsList: () -> MutableLiveData<DataStatus<List<Comments>>>,
     onClickForNextActivity: () -> Unit,
-    onClickForItemsDetails: (Int) -> Unit
+    onClickForItemsDetails: (Int) -> Unit,
+    getLazyListState: @Composable () -> LazyListState
 ) {
     LazyColumn(
-        state = listState,
+        state = getLazyListState(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         stickyHeader {
@@ -194,8 +191,6 @@ fun LazyColumnFun(
                                 }
                             }
                         }
-
-                        coroutineScope.launch { listState.scrollToItem(0) }
                         item {
                             Button(onClick = onButtonOnClickListener) {
                                 Text(text = "Scroll to Top")
