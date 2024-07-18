@@ -63,7 +63,6 @@ class CommentsActivity : ComponentActivity() {
                     with(commentsListViewModel) {
                         LazyColumnFun(
                             intent,
-                            mContext,
                             this@CommentsActivity,
                             listState,
                             coroutineScope,
@@ -75,7 +74,18 @@ class CommentsActivity : ComponentActivity() {
                             { this.hideProgress() },
                             { this.getComments() },
                             { this.isProgressShowing() },
-                            { this.getCommentList() }
+                            { this.getCommentList() },
+                            {
+                                mContext.startActivity(
+                                    Intent(
+                                        mContext,
+                                        NextActivity::class.java
+                                    )
+                                )
+                            },
+                            {
+                                navigateToNextActivity(mContext, it)
+                            }
                         )
                     }
 
@@ -83,13 +93,24 @@ class CommentsActivity : ComponentActivity() {
             }
         }
     }
+
+    private fun navigateToNextActivity(mContext: Context, postID: Int) {
+        mContext.startActivity(
+            Intent(
+                mContext,
+                NextActivity::class.java
+            ).putExtra(
+                "POST_ID",
+                postID
+            )
+        )
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LazyColumnFun(
     intent: Intent,
-    mContext: Context,
     commentsActivity: CommentsActivity,
     listState: LazyListState,
     coroutineScope: CoroutineScope,
@@ -98,7 +119,9 @@ fun LazyColumnFun(
     hideProgress: () -> Unit,
     getComments: () -> Unit,
     isProgressShowing: () -> Boolean,
-    getCommentsList: () -> MutableLiveData<DataStatus<List<Comments>>>
+    getCommentsList: () -> MutableLiveData<DataStatus<List<Comments>>>,
+    onClickForNextActivity: () -> Unit,
+    onClickForItemsDetails: (Int) -> Unit
 ) {
     LazyColumn(
         state = listState,
@@ -109,15 +132,10 @@ fun LazyColumnFun(
             Text(
                 text = "Welcome $text,",
             )
-            Button(modifier = Modifier.fillMaxSize(),
-                onClick = {
-                    mContext.startActivity(
-                        Intent(
-                            mContext,
-                            NextActivity::class.java
-                        )
-                    )
-                }) {
+            Button(
+                modifier = Modifier.fillMaxSize(),
+                onClick = onClickForNextActivity
+            ) {
                 Text(text = "Navigate to Next Activity")
             }
         }
@@ -142,15 +160,7 @@ fun LazyColumnFun(
                                         .background(backgroundColor)
                                         .fillMaxSize()
                                         .clickable {
-                                            mContext.startActivity(
-                                                Intent(
-                                                    mContext,
-                                                    NextActivity::class.java
-                                                ).putExtra(
-                                                    "POST_ID",
-                                                    comment.postId
-                                                )
-                                            )
+                                            onClickForItemsDetails(comment.id)
                                         }
                                 ) {
                                     Box(
